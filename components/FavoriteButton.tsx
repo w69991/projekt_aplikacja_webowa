@@ -12,6 +12,17 @@ export default function FavoriteButton({ recipeId, recipeName }: { recipeId: str
       return;
     }
 
+    const { data: existing } = await supabase
+    .from('favorites')
+    .select('id')
+    .eq('recipe_id', recipeId)
+    .maybeSingle();
+
+    if (existing) {
+    alert("Ten przepis jest już w Twoich ulubionych!");
+    return; 
+  }
+
     const { error } = await supabase.from('favorites').insert({
       user_id: user.id,
       recipe_id: recipeId,

@@ -32,7 +32,7 @@ export default function ProfilePage() {
 
   async function deleteFavorite(id: number) {
     await supabase.from('favorites').delete().eq('id', id);
-    fetchFavorites(); // Odśwież listę
+    fetchFavorites();
   }
 
   return (
