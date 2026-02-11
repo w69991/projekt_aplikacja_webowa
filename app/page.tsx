@@ -1,17 +1,16 @@
-'use client'; // Musimy to dodać na samej górze, żeby przyciski działały!
+'use client';
 
 import { useState, useEffect } from 'react';
 
 export default function Home() {
   const [recipes, setRecipes] = useState([]);
-  const [category, setCategory] = useState('Seafood'); // Domyślna kategoria
+  const [category, setCategory] = useState('Seafood');
 
-  // Funkcja pobierająca dane
   useEffect(() => {
     fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`)
       .then(res => res.json())
       .then(data => setRecipes(data.meals));
-  }, [category]); // Wykonaj to za każdym razem, gdy zmieni się kategoria
+  }, [category]);
 
   const categories = ['Seafood', 'Beef', 'Chicken', 'Vegetarian', 'Pasta'];
 
@@ -35,7 +34,6 @@ export default function Home() {
             <img src={meal.strMealThumb} alt={meal.strMeal} className="w-full h-48 object-cover" />
             <div className="p-4">
               <h2 className="text-xl font-semibold mb-4">{meal.strMeal}</h2>
-              {/* Przycisk, który w przyszłości może prowadzić do detali */}
               <button className="w-full border-2 border-orange-500 text-orange-500 py-2 rounded-lg hover:bg-orange-500 hover:text-white transition-all">
                 Szczegóły
               </button>
