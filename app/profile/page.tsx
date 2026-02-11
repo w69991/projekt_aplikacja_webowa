@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import { useRouter } from 'next/navigation';
 
+export const runtime = 'edge';
+
 export default function ProfilePage() {
   const [favorites, setFavorites] = useState<any[]>([]);
   const router = useRouter();

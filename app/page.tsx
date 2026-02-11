@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
+export const runtime = 'edge';
+
 export default function Home() {
   const [recipes, setRecipes] = useState([]);
   const [category, setCategory] = useState('Seafood');

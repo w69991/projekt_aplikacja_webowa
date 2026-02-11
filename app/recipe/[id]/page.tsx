@@ -1,6 +1,8 @@
 import { supabase } from '@/lib/supabase';
 import FavoriteButton from '@/components/FavoriteButton';
 
+export const runtime = 'edge';
+
 async function getRecipeDetails(id: string) {
   const res = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
   const data = await res.json();
