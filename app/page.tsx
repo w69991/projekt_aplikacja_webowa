@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 
 export default function Home() {
   const [recipes, setRecipes] = useState([]);
@@ -34,9 +35,11 @@ export default function Home() {
             <img src={meal.strMealThumb} alt={meal.strMeal} className="w-full h-48 object-cover" />
             <div className="p-4">
               <h2 className="text-xl font-semibold mb-4">{meal.strMeal}</h2>
-              <button className="w-full border-2 border-orange-500 text-orange-500 py-2 rounded-lg hover:bg-orange-500 hover:text-white transition-all">
-                Szczegóły
-              </button>
+                <Link href={`/recipe/${meal.idMeal}`}>
+                    <button className="w-full bg-orange-500 text-white py-2 rounded-lg hover:bg-orange-600 transition-colors">
+                    Zobacz przepis
+                    </button>
+                </Link>
             </div>
           </article>
         ))}
