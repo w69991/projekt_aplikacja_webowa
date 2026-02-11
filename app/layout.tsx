@@ -28,11 +28,12 @@ export default function RootLayout({
 
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
             <header className="bg-white shadow-md">
-        <nav className="flex gap-4 p-4 bg-gray-100">
-          <Link href="/" className="hover:text-orange-500">Główna</Link>
-          <Link href="/about" className="hover:text-orange-500">O nas</Link>
-          <Link href="/contact" className="hover:text-orange-500">Kontakt</Link>
-</nav>
+                <nav className="max-w-6xl mx-auto flex gap-6 p-4 items-center text-gray-800"> 
+                <div className="font-bold text-xl text-orange-500 mr-4 font-mono">🍲 SmartRecipe</div>
+                  <Link href="/" className="hover:text-orange-500 font-medium">Główna</Link>
+                  <Link href="/about" className="hover:text-orange-500 font-medium">O nas</Link>
+                  <Link href="/contact" className="hover:text-orange-500 font-medium">Kontakt</Link>
+                </nav>
       </header>
         {children}
       </body>

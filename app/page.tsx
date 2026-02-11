@@ -1,20 +1,47 @@
-export default function Home() {
-  return (
-    <div className="p-8">
-      <header className="mb-8">
-        <h1 className="text-4xl font-bold text-orange-500">Moja Książka Kucharska 🍲</h1>
-        <p className="text-gray-600">Witaj! Znajdź przepis na dziś.</p>
-      </header>
+'use client'; // Musimy to dodać na samej górze, żeby przyciski działały!
 
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Tu zaraz pojawią się przepisy z API */}
-        <div className="border p-4 rounded-lg shadow">
-          <h2 className="font-semibold">Przykładowy Przepis</h2>
-          <p>Kliknij przycisk poniżej, aby pobrać dane!</p>
-          <button className="mt-4 bg-orange-500 text-white px-4 py-2 rounded">
-            Szukaj obiadu
+import { useState, useEffect } from 'react';
+
+export default function Home() {
+  const [recipes, setRecipes] = useState([]);
+  const [category, setCategory] = useState('Seafood'); // Domyślna kategoria
+
+  // Funkcja pobierająca dane
+  useEffect(() => {
+    fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`)
+      .then(res => res.json())
+      .then(data => setRecipes(data.meals));
+  }, [category]); // Wykonaj to za każdym razem, gdy zmieni się kategoria
+
+  const categories = ['Seafood', 'Beef', 'Chicken', 'Vegetarian', 'Pasta'];
+
+  return (
+    <div className="p-8 max-w-6xl mx-auto">
+      <nav className="flex gap-4 mb-8 overflow-x-auto pb-2">
+        {categories.map(cat => (
+          <button
+            key={cat}
+            onClick={() => setCategory(cat)}
+            className={`px-4 py-2 rounded-full border ${category === cat ? 'bg-orange-500 text-white' : 'bg-white text-gray-700 hover:bg-orange-100'}`}
+          >
+            {cat}
           </button>
-        </div>
+        ))}
+      </nav>
+
+      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {recipes?.map((meal: any) => (
+          <article key={meal.idMeal} className="border rounded-xl overflow-hidden shadow-sm">
+            <img src={meal.strMealThumb} alt={meal.strMeal} className="w-full h-48 object-cover" />
+            <div className="p-4">
+              <h2 className="text-xl font-semibold mb-4">{meal.strMeal}</h2>
+              {/* Przycisk, który w przyszłości może prowadzić do detali */}
+              <button className="w-full border-2 border-orange-500 text-orange-500 py-2 rounded-lg hover:bg-orange-500 hover:text-white transition-all">
+                Szczegóły
+              </button>
+            </div>
+          </article>
+        ))}
       </section>
     </div>
   );
