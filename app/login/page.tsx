@@ -1,11 +1,13 @@
 'use client';
 import { useState } from 'react';
 import { supabase } from '@/lib/supabase';
+import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+  const router = useRouter();
 
   const handleSignUp = async () => {
     const { error } = await supabase.auth.signUp({ email, password });
@@ -14,11 +16,17 @@ export default function LoginPage() {
   };
 
   const handleLogin = async () => {
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) setMessage(error.message);
-    else setMessage('Zalogowano pomyślnie!');
-  };
-
+  const { error } = await supabase.auth.signInWithPassword({ email, password });
+  if (error) {
+    setMessage(error.message);
+  } else {
+    setMessage('Zalogowano pomyślnie! Przekierowuję...');
+    setTimeout(() => {
+      router.push('/profile');
+      router.refresh(); 
+    }, 1000);
+  }
+};
   return (
     <main className="p-8 max-w-md mx-auto mt-10 border rounded-xl shadow-lg bg-white">
       <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">Panel Kucharza</h1>

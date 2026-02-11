@@ -1,3 +1,6 @@
+import { supabase } from '@/lib/supabase';
+import FavoriteButton from '@/components/FavoriteButton';
+
 async function getRecipeDetails(id: string) {
   const res = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
   const data = await res.json();
@@ -9,7 +12,7 @@ export default async function RecipeDetails({ params }: { params: Promise<{ id: 
   const recipe = await getRecipeDetails(id);
 
   if (!recipe) return <p className="p-8 text-center">Nie znaleziono przepisu.</p>;
-
+  
   const ingredients = [];
   for (let i = 1; i <= 20; i++) {
     if (recipe[`strIngredient${i}`]) {
@@ -22,6 +25,7 @@ export default async function RecipeDetails({ params }: { params: Promise<{ id: 
       <article>
         <header className="mb-8">
           <h1 className="text-4xl font-bold mb-4">{recipe.strMeal}</h1>
+          <FavoriteButton recipeId={recipe.idMeal} recipeName={recipe.strMeal} />
           <img src={recipe.strMealThumb} alt={recipe.strMeal} className="w-full h-96 object-cover rounded-2xl shadow-lg" />
         </header>
 
