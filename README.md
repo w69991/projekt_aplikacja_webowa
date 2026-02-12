@@ -45,8 +45,21 @@ cd projekt_aplikacja_webowa
 # Zainstaluj zależności (użyj flagi legacy-peer-deps w razie konfliktów)
 npm install --legacy-peer-deps
 
-#Uruchomienie
+#Utwórz nowy projekt w Supabase i stwórz tabelę w SQL Editor
+CREATE TABLE favorites (
+  id SERIAL PRIMARY KEY,
+  user_id UUID REFERENCES auth.users NOT NULL,
+  recipe_id INTEGER NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()),
+  CONSTRAINT unique_user_recipe UNIQUE (user_id, recipe_id)
+);
+
+#Utwórz plik .env.local w głównym katalogu projektu
+NEXT_PUBLIC_SUPABASE_URL=twoj_url_z_supabase
+NEXT_PUBLIC_SUPABASE_ANON_KEY=twoj_klucz_anon_z_supabase
+
+#Uruchomienie aplikacji
 npm run dev
 
-#Strona będzie pod adresem
+#Aplikacja będzie pod adresem
 http://localhost:3000
